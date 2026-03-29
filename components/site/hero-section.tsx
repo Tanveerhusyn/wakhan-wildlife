@@ -52,9 +52,10 @@ export function HeroSection({ data }: { data: HeroContent | null }) {
             preload="metadata"
           />
         )}
-        {/* Warm overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[--color-charcoal]/60 via-[--color-charcoal]/30 to-[--color-charcoal]/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[--color-charcoal]/40 via-transparent to-transparent" />
+        {/* Dark overlays for text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
       </div>
 
       {/* Content */}

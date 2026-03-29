@@ -33,5 +33,5 @@ yarn-error.log*
 next-env.d.ts
 
 # large media (serve statically or via CDN)
-public/hero-video.mp4
+
 public/videos/

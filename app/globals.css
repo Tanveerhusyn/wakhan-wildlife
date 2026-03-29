@@ -1,0 +1,359 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Lightened the color scheme - background from 0.05 to 0.08, other values adjusted */
+:root {
+  --background: oklch(0.12 0.005 260);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.15 0.005 260);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.15 0.005 260);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.95 0 0);
+  --primary-foreground: oklch(0.12 0 0);
+  --secondary: oklch(0.22 0.005 260);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.22 0.005 260);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.65 0.12 220);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.5 0.2 25);
+  --destructive-foreground: oklch(0.95 0 0);
+  --border: oklch(0.28 0.005 260);
+  --input: oklch(0.28 0.005 260);
+  --ring: oklch(0.5 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+/* Added smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for horizontal galleries */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom selection color */
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img[src=""] {
+  opacity: 0;
+}
+
+/* Ken Burns animation keyframes */
+@keyframes ken-burns-left {
+  0% {
+    transform: scale(1.15) translateX(0);
+  }
+  100% {
+    transform: scale(1.25) translateX(-3%);
+  }
+}
+
+@keyframes ken-burns-right {
+  0% {
+    transform: scale(1.15) translateX(0);
+  }
+  100% {
+    transform: scale(1.25) translateX(3%);
+  }
+}
+
+@keyframes ken-burns-up {
+  0% {
+    transform: scale(1.15) translateY(0);
+  }
+  100% {
+    transform: scale(1.25) translateY(-3%);
+  }
+}
+
+@keyframes ken-burns-down {
+  0% {
+    transform: scale(1.15) translateY(0);
+  }
+  100% {
+    transform: scale(1.25) translateY(3%);
+  }
+}
+
+/* Added hero section animations */
+@keyframes slow-zoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes subtle-drift {
+  0%,
+  100% {
+    transform: scale(1.1) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.1) translate(1%, 0.5%);
+  }
+  50% {
+    transform: scale(1.1) translate(0, 1%);
+  }
+  75% {
+    transform: scale(1.1) translate(-0.5%, 0.5%);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes line-drift {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes line-drift-reverse {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-20px);
+  }
+}
+
+@theme inline {
+  /* ─── Earth tone palette (public site) ─────────────────── */
+  --color-charcoal:   oklch(0.22 0.01 60);    /* warm dark bg */
+  --color-olive:      oklch(0.35 0.06 120);   /* deep olive green */
+  --color-terracotta: oklch(0.52 0.12 40);    /* warm accent */
+  --color-cream:      oklch(0.94 0.03 80);    /* warm text/bg */
+  --color-sand:       oklch(0.82 0.05 80);    /* mid sand */
+  --color-mist:       oklch(0.88 0.02 80);    /* near-white warm */
+
+  /* ─── Typography ─────────────────────────────────────── */
+  --font-display: var(--font-playfair, "Georgia", serif);
+  --font-body:    var(--font-source-sans, system-ui, sans-serif);
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Ken Burns animation utilities */
+  --animate-ken-burns-left: ken-burns-left 30s ease-out infinite alternate;
+  --animate-ken-burns-right: ken-burns-right 30s ease-out infinite alternate;
+  --animate-ken-burns-up: ken-burns-up 30s ease-out infinite alternate;
+  --animate-ken-burns-down: ken-burns-down 30s ease-out infinite alternate;
+
+  /* Hero animation utilities */
+  --animate-slow-zoom: slow-zoom 25s ease-out forwards;
+  --animate-subtle-drift: subtle-drift 40s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 8s ease-in-out infinite;
+  --animate-line-drift: line-drift 6s ease-in-out infinite;
+  --animate-line-drift-reverse: line-drift-reverse 6s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Ken Burns animation classes */
+.animate-ken-burns-left {
+  animation: var(--animate-ken-burns-left);
+}
+
+.animate-ken-burns-right {
+  animation: var(--animate-ken-burns-right);
+}
+
+.animate-ken-burns-up {
+  animation: var(--animate-ken-burns-up);
+}
+
+.animate-ken-burns-down {
+  animation: var(--animate-ken-burns-down);
+}
+
+/* Hero animation classes */
+.animate-slow-zoom {
+  animation: var(--animate-slow-zoom);
+}
+
+.animate-subtle-drift {
+  animation: var(--animate-subtle-drift);
+}
+
+.animate-pulse-slow {
+  animation: var(--animate-pulse-slow);
+}
+
+.animate-line-drift {
+  animation: var(--animate-line-drift);
+}
+
+.animate-line-drift-reverse {
+  animation: var(--animate-line-drift-reverse);
+}
+
+/* ─── Typography utilities ──────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* ─── Admin panel light-mode overrides ─────────────────── */
+/* Tailwind v4 @theme inline writes --color-* to :root directly,
+   so we must override --color-* (not --foreground) here. */
+.admin-light {
+  color-scheme: light;
+  --color-background: oklch(0.985 0 0);
+  --color-foreground: oklch(0.145 0 0);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.145 0 0);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.145 0 0);
+  --color-primary: oklch(0.205 0 0);
+  --color-primary-foreground: oklch(0.985 0 0);
+  --color-secondary: oklch(0.97 0 0);
+  --color-secondary-foreground: oklch(0.205 0 0);
+  --color-muted: oklch(0.97 0 0);
+  --color-muted-foreground: oklch(0.45 0 0);
+  --color-accent: oklch(0.97 0 0);
+  --color-accent-foreground: oklch(0.205 0 0);
+  --color-border: oklch(0.88 0 0);
+  --color-input: oklch(0.88 0 0);
+  --color-ring: oklch(0.6 0 0);
+  background-color: oklch(0.97 0 0);
+  color: oklch(0.145 0 0);
+}
+
+/* ─── Scrollbar hide ────────────────────────────────────── */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

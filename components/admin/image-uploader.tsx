@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { toast } from "sonner"
+import { uploadToBlob } from "@/lib/upload-client"
+import { UPLOAD_RULES } from "@/lib/upload-rules"
 
 interface ImageUploaderProps {
   label?: string
@@ -27,18 +30,14 @@ export function ImageUploader({
   async function uploadFile(file: File) {
     setUploading(true)
     try {
-      const formData = new FormData()
-      formData.append("file", file)
-      formData.append("prefix", prefix)
-
-      const res = await fetch("/api/upload", { method: "POST", body: formData })
-      if (!res.ok) throw new Error("Upload failed")
-      const { url } = await res.json()
+      const url = await uploadToBlob(file, prefix, "image")
       onChange(url)
+      toast.success("Uploaded")
     } catch (err) {
-      console.error(err)
+      toast.error(err instanceof Error ? err.message : "Upload failed")
     } finally {
       setUploading(false)
+      if (inputRef.current) inputRef.current.value = ""
     }
   }
 
@@ -46,7 +45,7 @@ export function ImageUploader({
     e.preventDefault()
     setDragging(false)
     const file = e.dataTransfer.files[0]
-    if (file && file.type.startsWith("image/")) uploadFile(file)
+    if (file) uploadFile(file)
   }
 
   return (
@@ -113,6 +112,7 @@ export function ImageUploader({
             <p className="text-sm">
               {uploading ? "Uploading…" : "Drop image or click to upload"}
             </p>
+            {!uploading && <p className="text-xs text-stone-400">{UPLOAD_RULES.image.label}</p>}
           </div>
         )}
       </div>
@@ -120,7 +120,7 @@ export function ImageUploader({
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept={UPLOAD_RULES.image.types.join(",")}
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0]

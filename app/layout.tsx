@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   title: "Wakhan Wildlife Tourism | Snow Leopard Expeditions",
   description:
     "Exclusive Snow Leopard Photo Expeditions in the Heart of the Karakoram. Journey into the realm of the mountain ghost with expert local guides.",
+  // This layout only wraps the admin now (the public pages are plain HTML route handlers).
+  robots: { index: false, follow: false },
 }
 
 export default function RootLayout({
@@ -29,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${sourceSans.variable}`}>
-      <body className="antialiased">
+      <body className="admin-light antialiased">
         {children}
       </body>
     </html>

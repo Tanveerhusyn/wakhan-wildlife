@@ -14,9 +14,23 @@ const bookingSchema = z.object({
 })
 
 export async function POST(req: NextRequest) {
-  const body = await req.json()
+  // The public site's booking form is a plain HTML form (works without JavaScript); API clients send JSON.
+  const isForm = !(req.headers.get("content-type") ?? "").includes("application/json")
+  let body: Record<string, unknown>
+  if (isForm) {
+    const fd = await req.formData()
+    body = Object.fromEntries(
+      [...fd.entries()]
+        .filter(([, v]) => typeof v === "string" && v.trim() !== "")
+        .map(([k, v]) => [k, (v as string).trim()]),
+    )
+  } else {
+    body = await req.json()
+  }
+
   const parsed = bookingSchema.safeParse(body)
   if (!parsed.success) {
+    if (isForm) return NextResponse.redirect(new URL("/booking-sent?status=invalid", req.url), 303)
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
   }
 
@@ -25,6 +39,7 @@ export async function POST(req: NextRequest) {
     status: "new",
   })
 
+  if (isForm) return NextResponse.redirect(new URL("/booking-sent", req.url), 303)
   return NextResponse.json({ success: true })
 }
 

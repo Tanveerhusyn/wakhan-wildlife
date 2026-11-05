@@ -35,3 +35,7 @@ next-env.d.ts
 # large media (serve statically or via CDN)
 
 public/videos/
+.env*
+
+# design tool history (local)
+.taste-skill/
